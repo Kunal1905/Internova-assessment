@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import * as XLSX from "xlsx";
-import { cleanRegister, Row } from "@/lib/cleaner";
+import { cleanRegister, Row } from "../lib/cleaners";
+import { Fragment } from "react";
 
 const COLS = ["branch", "customer_name", "loan_amount", "loan_date", "phone", "status"] as const;
 const LABEL = { branch: "Branch", customer_name: "Customer", loan_amount: "Amount (₹)", loan_date: "Date", phone: "Phone", status: "Status" };
@@ -55,7 +56,7 @@ export default function Home() {
           <thead><tr><th>#</th>{COLS.map((c) => <th key={c} className="text-left">{LABEL[c]}</th>)}</tr></thead>
           <tbody>
             {rows.map((r) => (
-              <>
+              <Fragment key={r.rowNo}>
                 <tr key={r.rowNo} className={ok(r) ? "" : "bg-amber-50"}>
                   <td>{r.rowNo}</td>
                   {COLS.map((c) => (
@@ -75,7 +76,7 @@ export default function Home() {
                     </td>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </table>
